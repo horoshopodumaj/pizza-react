@@ -5,7 +5,6 @@ import Sort from "./components/Sort";
 import "./scss/app.scss";
 
 import pizzas from "./assets/pizzas.json";
-console.log(pizzas);
 
 function App() {
     return (
