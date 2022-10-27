@@ -9,7 +9,7 @@ const categories = [
     { id: 6, title: "Закрытые" },
 ];
 function Categories() {
-    const [activeCategory, setActiveCategory] = useState(0);
+    const [activeCategory, setActiveCategory] = useState(1);
 
     const onClickCategory = (id) => {
         setActiveCategory(id);
