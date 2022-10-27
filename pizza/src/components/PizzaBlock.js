@@ -1,10 +1,15 @@
 import React, { useState } from "react";
 
-function PizzaBlock({ title, price, imageUrl }) {
+function PizzaBlock({ title, price, imageUrl, sizes }) {
     const [pizzaCount, setPizzaCount] = useState(0);
+    const [sizePizza, setSizePizza] = useState(0);
 
     const onClickAdd = () => {
         setPizzaCount(pizzaCount + 1);
+    };
+
+    const onClickSize = (index) => {
+        setSizePizza(index);
     };
     return (
         <div className="pizza-block">
@@ -16,9 +21,13 @@ function PizzaBlock({ title, price, imageUrl }) {
                     <li>традиционное</li>
                 </ul>
                 <ul>
-                    <li className="active">26 см.</li>
-                    <li>30 см.</li>
-                    <li>40 см.</li>
+                    {sizes.map((size, index) => (
+                        <li
+                            onClick={() => onClickSize(index)}
+                            className={sizePizza === index ? "active" : ""}>
+                            {size} см.
+                        </li>
+                    ))}
                 </ul>
             </div>
             <div className="pizza-block__bottom">
