@@ -6,14 +6,22 @@ import "./scss/app.scss";
 
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { Skeleton } from "./components/PizzaBlock/Skeleton";
 
 function App() {
     const [pizzas, setPizzas] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-        axios.get("https://635ab9256f97ae73a634f1e1.mockapi.io/pizzas").then((res) => {
-            setPizzas(res.data);
-        });
+        try {
+            axios.get("https://635ab9256f97ae73a634f1e1.mockapi.io/pizzas").then((res) => {
+                setPizzas(res.data);
+                setIsLoading(false);
+            });
+        } catch (error) {
+            console.error(error);
+            alert("Что-то пошло не так");
+        }
     }, []);
     return (
         <div className="wrapper">
@@ -26,9 +34,10 @@ function App() {
                     </div>
                     <h2 className="content__title">Все пиццы</h2>
                     <div className="content__items">
-                        {pizzas.map((pizza) => (
-                            <PizzaBlock key={pizza.id} {...pizza} />
-                        ))}
+                        {isLoading
+                            ? [...new Array(6)].map((_, index) => <Skeleton key={index} />)
+                            : pizzas.map((pizza) => <PizzaBlock key={pizza.id} {...pizza} />)}
+                        {}
                     </div>
                 </div>
             </div>
