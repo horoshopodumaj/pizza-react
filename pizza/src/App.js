@@ -4,9 +4,17 @@ import PizzaBlock from "./components/PizzaBlock";
 import Sort from "./components/Sort";
 import "./scss/app.scss";
 
-import pizzas from "./assets/pizzas.json";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 function App() {
+    const [pizzas, setPizzas] = useState([]);
+
+    useEffect(() => {
+        axios.get("https://635ab9256f97ae73a634f1e1.mockapi.io/pizzas").then((res) => {
+            setPizzas(res.data);
+        });
+    }, []);
     return (
         <div className="wrapper">
             <Header />
