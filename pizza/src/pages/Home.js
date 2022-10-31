@@ -19,6 +19,7 @@ export default function Home() {
             console.error(error);
             alert("Что-то пошло не так");
         }
+        window.scrollTo(0, 0);
     }, []);
     return (
         <div className="container">
