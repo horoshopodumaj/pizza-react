@@ -21,7 +21,7 @@ export default function Home() {
         }
     }, []);
     return (
-        <>
+        <div className="container">
             <div className="content__top">
                 <Categories />
                 <Sort />
@@ -33,6 +33,6 @@ export default function Home() {
                     : pizzas.map((pizza) => <PizzaBlock key={pizza.id} {...pizza} />)}
                 {}
             </div>
-        </>
+        </div>
     );
 }

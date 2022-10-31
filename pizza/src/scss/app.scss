@@ -25,6 +25,9 @@ body {
 
     &__title {
         margin: 35px 0;
+        font-weight: 800;
+        font-size: 38px;
+        margin-top: 60px;
     }
 
     &__items {
@@ -54,7 +57,7 @@ body {
         @media screen and (max-width: 1260px) {
             .categories {
                 width: 100%;
-                overflow: scroll;
+                overflow: auto;
 
                 ul {
                     width: 785px;
@@ -155,6 +158,11 @@ body {
                 color: darken($color: #b6b6b6, $amount: 50);
             }
         }
+    }
+
+    &__items {
+        display: flex;
+        flex-direction: column;
     }
 
     &__item {
