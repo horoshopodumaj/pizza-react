@@ -35,7 +35,7 @@ export default function Home() {
                         setCategoryId(id);
                     }}
                 />
-                <Sort />
+                <Sort value={sortType} onChangeSort={(index) => setSortType(index)} />
             </div>
             <h2 className="content__title">Все пиццы</h2>
             <div className="content__items">
