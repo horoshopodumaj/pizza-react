@@ -8,6 +8,8 @@ import Categories from "../components/Categories";
 export default function Home() {
     const [pizzas, setPizzas] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
+    const [categoryId, setCategoryId] = useState(1);
+    const [sortType, setSortType] = useState(0);
 
     useEffect(() => {
         try {
@@ -24,7 +26,12 @@ export default function Home() {
     return (
         <div className="container">
             <div className="content__top">
-                <Categories />
+                <Categories
+                    value={categoryId}
+                    onClickCategory={(id) => {
+                        setCategoryId(id);
+                    }}
+                />
                 <Sort />
             </div>
             <h2 className="content__title">Все пиццы</h2>

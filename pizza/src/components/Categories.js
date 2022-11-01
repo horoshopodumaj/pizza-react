@@ -8,19 +8,14 @@ const categories = [
     { id: 5, title: "Острые" },
     { id: 6, title: "Закрытые" },
 ];
-function Categories() {
-    const [activeCategory, setActiveCategory] = useState(1);
-
-    const onClickCategory = (id) => {
-        setActiveCategory(id);
-    };
+function Categories({ value, onClickCategory }) {
     return (
         <div className="categories">
             <ul>
                 {categories.map((category) => (
                     <li
                         onClick={() => onClickCategory(category.id)}
-                        className={activeCategory === category.id ? "active" : ""}
+                        className={value === category.id ? "active" : ""}
                         key={category.id}>
                         {category.title}
                     </li>
