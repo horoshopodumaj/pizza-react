@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 
 const categories = [
-    { id: 1, title: "Все" },
-    { id: 2, title: "Мясные" },
-    { id: 3, title: "Вегетарианская" },
-    { id: 4, title: "Гриль" },
-    { id: 5, title: "Острые" },
-    { id: 6, title: "Закрытые" },
+    { id: 0, title: "Все" },
+    { id: 1, title: "Мясные" },
+    { id: 2, title: "Вегетарианская" },
+    { id: 3, title: "Гриль" },
+    { id: 4, title: "Острые" },
+    { id: 5, title: "Закрытые" },
 ];
 function Categories({ value, onClickCategory }) {
     return (

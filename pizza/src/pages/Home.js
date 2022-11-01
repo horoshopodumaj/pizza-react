@@ -8,21 +8,24 @@ import Categories from "../components/Categories";
 export default function Home() {
     const [pizzas, setPizzas] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
-    const [categoryId, setCategoryId] = useState(1);
+    const [categoryId, setCategoryId] = useState(0);
     const [sortType, setSortType] = useState(0);
 
     useEffect(() => {
         try {
-            axios.get("https://635ab9256f97ae73a634f1e1.mockapi.io/pizzas").then((res) => {
-                setPizzas(res.data);
-                setIsLoading(false);
-            });
+            setIsLoading(true);
+            axios
+                .get("https://635ab9256f97ae73a634f1e1.mockapi.io/pizzas?category=" + categoryId)
+                .then((res) => {
+                    setPizzas(res.data);
+                    setIsLoading(false);
+                });
         } catch (error) {
             console.error(error);
             alert("Что-то пошло не так");
         }
         window.scrollTo(0, 0);
-    }, []);
+    }, [categoryId]);
     return (
         <div className="container">
             <div className="content__top">
