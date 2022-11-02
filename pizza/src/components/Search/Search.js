@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
 import style from "./Search.module.scss";
+import { SeacrhContext } from "../../App";
 
-const Search = ({ searchValue, setSearchValue }) => {
+const Search = () => {
+    const { searchValue, setSearchValue } = useContext(SeacrhContext);
     return (
         <div className={style.root}>
             <svg className={style.icon} viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
