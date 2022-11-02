@@ -10,6 +10,7 @@ export default function Home({ searchValue }) {
     const [pizzas, setPizzas] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [categoryId, setCategoryId] = useState(0);
+    const [currentPage, setCurrentPage] = useState(1);
     const [sortType, setSortType] = useState({ name: "популярности", sortProperty: "rating" });
 
     useEffect(() => {
@@ -21,7 +22,7 @@ export default function Home({ searchValue }) {
             setIsLoading(true);
             axios
                 .get(
-                    `https://635ab9256f97ae73a634f1e1.mockapi.io/pizzas?${category}&sortBy=${sort}&order=${order}${search}`
+                    `https://635ab9256f97ae73a634f1e1.mockapi.io/pizzas?page=${currentPage}&limit=4&${category}&sortBy=${sort}&order=${order}${search}`
                 )
                 .then((res) => {
                     setPizzas(res.data);
@@ -32,7 +33,7 @@ export default function Home({ searchValue }) {
             alert("Что-то пошло не так");
         }
         window.scrollTo(0, 0);
-    }, [categoryId, sortType, searchValue]);
+    }, [categoryId, sortType, searchValue, currentPage]);
     return (
         <div className="container">
             <div className="content__top">
@@ -51,7 +52,7 @@ export default function Home({ searchValue }) {
                     : pizzas.map((pizza) => <PizzaBlock key={pizza.id} {...pizza} />)}
                 {}
             </div>
-            <Pagination />
+            <Pagination onChangePage={(number) => setCurrentPage(number)} />
         </div>
     );
 }
