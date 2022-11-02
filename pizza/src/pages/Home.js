@@ -5,21 +5,22 @@ import PizzaBlock from "../components/PizzaBlock";
 import Sort from "../components/Sort";
 import Categories from "../components/Categories";
 
-export default function Home() {
+export default function Home({ searchValue }) {
     const [pizzas, setPizzas] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [categoryId, setCategoryId] = useState(0);
     const [sortType, setSortType] = useState({ name: "популярности", sortProperty: "rating" });
 
-    const category = categoryId > 0 ? `category=${categoryId}` : "";
-    const sort = sortType.sortProperty.replace("-", "");
-    const order = sortType.sortProperty.includes("-") ? "asc" : "desc";
     useEffect(() => {
+        const category = categoryId > 0 ? `category=${categoryId}` : "";
+        const sort = sortType.sortProperty.replace("-", "");
+        const order = sortType.sortProperty.includes("-") ? "asc" : "desc";
+        const search = searchValue ? `&search=${searchValue}` : "";
         try {
             setIsLoading(true);
             axios
                 .get(
-                    `https://635ab9256f97ae73a634f1e1.mockapi.io/pizzas?${category}&sortBy=${sort}&order=${order}`
+                    `https://635ab9256f97ae73a634f1e1.mockapi.io/pizzas?${category}&sortBy=${sort}&order=${order}${search}`
                 )
                 .then((res) => {
                     setPizzas(res.data);
@@ -30,7 +31,7 @@ export default function Home() {
             alert("Что-то пошло не так");
         }
         window.scrollTo(0, 0);
-    }, [categoryId, sortType]);
+    }, [categoryId, sortType, searchValue]);
     return (
         <div className="container">
             <div className="content__top">
