@@ -1,12 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import Skeleton from "../components/PizzaBlock/Skeleton";
 import PizzaBlock from "../components/PizzaBlock";
 import Sort from "../components/Sort";
 import Categories from "../components/Categories";
 import Pagination from "../components/Pagination";
+import { SeacrhContext } from "../App";
 
-export default function Home({ searchValue }) {
+export default function Home() {
+    const { searchValue } = useContext(SeacrhContext);
     const [pizzas, setPizzas] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [categoryId, setCategoryId] = useState(0);
