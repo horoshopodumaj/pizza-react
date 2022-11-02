@@ -4,6 +4,7 @@ import Skeleton from "../components/PizzaBlock/Skeleton";
 import PizzaBlock from "../components/PizzaBlock";
 import Sort from "../components/Sort";
 import Categories from "../components/Categories";
+import Pagination from "../components/Pagination";
 
 export default function Home({ searchValue }) {
     const [pizzas, setPizzas] = useState([]);
@@ -50,6 +51,7 @@ export default function Home({ searchValue }) {
                     : pizzas.map((pizza) => <PizzaBlock key={pizza.id} {...pizza} />)}
                 {}
             </div>
+            <Pagination />
         </div>
     );
 }
