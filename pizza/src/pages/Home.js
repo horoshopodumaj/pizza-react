@@ -6,15 +6,22 @@ import Sort from "../components/Sort";
 import Categories from "../components/Categories";
 import Pagination from "../components/Pagination";
 import { SeacrhContext } from "../App";
+import { useDispatch, useSelector } from "react-redux";
+import { setCategoryId } from "../redux/slices/filterSlice";
 
 export default function Home() {
+    const categoryId = useSelector((state) => state.filter.categoryId);
+    const dispatch = useDispatch();
+
     const { searchValue } = useContext(SeacrhContext);
     const [pizzas, setPizzas] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
-    const [categoryId, setCategoryId] = useState(0);
     const [currentPage, setCurrentPage] = useState(1);
     const [sortType, setSortType] = useState({ name: "популярности", sortProperty: "rating" });
 
+    const onClickCategory = (id) => {
+        dispatch(setCategoryId(id));
+    };
     useEffect(() => {
         const category = categoryId > 0 ? `category=${categoryId}` : "";
         const sort = sortType.sortProperty.replace("-", "");
@@ -39,12 +46,7 @@ export default function Home() {
     return (
         <div className="container">
             <div className="content__top">
-                <Categories
-                    value={categoryId}
-                    onClickCategory={(id) => {
-                        setCategoryId(id);
-                    }}
-                />
+                <Categories value={categoryId} onClickCategory={onClickCategory} />
                 <Sort value={sortType} onChangeSort={(item) => setSortType(item)} />
             </div>
             <h2 className="content__title">Все пиццы</h2>
