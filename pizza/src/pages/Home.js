@@ -10,29 +10,27 @@ import { useDispatch, useSelector } from "react-redux";
 import { setCategoryId } from "../redux/slices/filterSlice";
 
 export default function Home() {
-    const categoryId = useSelector((state) => state.filter.categoryId);
-    const sortType = useSelector((state) => state.filter.sort);
+    const { categoryId, sort } = useSelector((state) => state.filter);
     const dispatch = useDispatch();
 
     const { searchValue } = useContext(SeacrhContext);
     const [pizzas, setPizzas] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [currentPage, setCurrentPage] = useState(1);
-    //const [sortType, setSortType] = useState({ name: "популярности", sortProperty: "rating" });
 
     const onClickCategory = (id) => {
         dispatch(setCategoryId(id));
     };
     useEffect(() => {
         const category = categoryId > 0 ? `category=${categoryId}` : "";
-        const sort = sortType.sortProperty.replace("-", "");
-        const order = sortType.sortProperty.includes("-") ? "asc" : "desc";
+        const sortType = sort.sortProperty.replace("-", "");
+        const order = sort.sortProperty.includes("-") ? "asc" : "desc";
         const search = searchValue ? `&search=${searchValue}` : "";
         try {
             setIsLoading(true);
             axios
                 .get(
-                    `https://635ab9256f97ae73a634f1e1.mockapi.io/pizzas?page=${currentPage}&limit=4&${category}&sortBy=${sort}&order=${order}${search}`
+                    `https://635ab9256f97ae73a634f1e1.mockapi.io/pizzas?page=${currentPage}&limit=4&${category}&sortBy=${sortType}&order=${order}${search}`
                 )
                 .then((res) => {
                     setPizzas(res.data);
@@ -43,7 +41,7 @@ export default function Home() {
             alert("Что-то пошло не так");
         }
         window.scrollTo(0, 0);
-    }, [categoryId, sortType, searchValue, currentPage]);
+    }, [categoryId, sort, searchValue, currentPage]);
     return (
         <div className="container">
             <div className="content__top">
