@@ -1,9 +1,16 @@
-import React, { useContext } from "react";
+import React, { useContext, useRef } from "react";
 import style from "./Search.module.scss";
 import { SeacrhContext } from "../../App";
 
 const Search = () => {
     const { searchValue, setSearchValue } = useContext(SeacrhContext);
+    const inputRef = useRef();
+
+    const onClearInput = () => {
+        setSearchValue("");
+        inputRef.current.focus();
+    };
+
     return (
         <div className={style.root}>
             <svg className={style.icon} viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -13,6 +20,7 @@ const Search = () => {
                 </g>
             </svg>
             <input
+                ref={inputRef}
                 value={searchValue}
                 onChange={(event) => {
                     setSearchValue(event.target.value);
@@ -23,7 +31,7 @@ const Search = () => {
             {searchValue && (
                 <svg
                     className={style.clear}
-                    onClick={() => setSearchValue("")}
+                    onClick={onClearInput}
                     height="48"
                     viewBox="0 0 48 48"
                     width="48"
