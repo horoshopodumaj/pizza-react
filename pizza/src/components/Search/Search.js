@@ -1,4 +1,5 @@
 import React, { useContext, useRef } from "react";
+import debounce from "lodash.debounce";
 import style from "./Search.module.scss";
 import { SeacrhContext } from "../../App";
 
