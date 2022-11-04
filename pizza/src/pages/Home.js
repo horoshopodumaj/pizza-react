@@ -11,13 +11,14 @@ import { setCategoryId } from "../redux/slices/filterSlice";
 
 export default function Home() {
     const categoryId = useSelector((state) => state.filter.categoryId);
+    const sortType = useSelector((state) => state.filter.sort);
     const dispatch = useDispatch();
 
     const { searchValue } = useContext(SeacrhContext);
     const [pizzas, setPizzas] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [currentPage, setCurrentPage] = useState(1);
-    const [sortType, setSortType] = useState({ name: "популярности", sortProperty: "rating" });
+    //const [sortType, setSortType] = useState({ name: "популярности", sortProperty: "rating" });
 
     const onClickCategory = (id) => {
         dispatch(setCategoryId(id));
@@ -47,7 +48,7 @@ export default function Home() {
         <div className="container">
             <div className="content__top">
                 <Categories value={categoryId} onClickCategory={onClickCategory} />
-                <Sort value={sortType} onChangeSort={(item) => setSortType(item)} />
+                <Sort />
             </div>
             <h2 className="content__title">Все пиццы</h2>
             <div className="content__items">
