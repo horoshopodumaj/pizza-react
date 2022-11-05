@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
+import qs from "qs";
 import axios from "axios";
 import Skeleton from "../components/PizzaBlock/Skeleton";
 import PizzaBlock from "../components/PizzaBlock";
@@ -8,10 +9,12 @@ import Pagination from "../components/Pagination";
 import { SeacrhContext } from "../App";
 import { useDispatch, useSelector } from "react-redux";
 import { setCategoryId, setCurrentPage } from "../redux/slices/filterSlice";
+import { useNavigate } from "react-router-dom";
 
 export default function Home() {
     const { categoryId, sort, currentPage } = useSelector((state) => state.filter);
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const { searchValue } = useContext(SeacrhContext);
     const [pizzas, setPizzas] = useState([]);
@@ -45,6 +48,16 @@ export default function Home() {
         }
         window.scrollTo(0, 0);
     }, [categoryId, sort, searchValue, currentPage]);
+
+    useEffect(() => {
+        const queryString = qs.stringify({
+            sortProperty: sort.sortProperty,
+            categoryId,
+            currentPage,
+        });
+        navigate(`?${queryString}`);
+    }, [categoryId, sort, searchValue, currentPage]);
+
     return (
         <div className="container">
             <div className="content__top">
