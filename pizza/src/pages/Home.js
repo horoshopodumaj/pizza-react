@@ -7,19 +7,22 @@ import Categories from "../components/Categories";
 import Pagination from "../components/Pagination";
 import { SeacrhContext } from "../App";
 import { useDispatch, useSelector } from "react-redux";
-import { setCategoryId } from "../redux/slices/filterSlice";
+import { setCategoryId, setCurrentPage } from "../redux/slices/filterSlice";
 
 export default function Home() {
-    const { categoryId, sort } = useSelector((state) => state.filter);
+    const { categoryId, sort, currentPage } = useSelector((state) => state.filter);
     const dispatch = useDispatch();
 
     const { searchValue } = useContext(SeacrhContext);
     const [pizzas, setPizzas] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
-    const [currentPage, setCurrentPage] = useState(1);
 
     const onClickCategory = (id) => {
         dispatch(setCategoryId(id));
+    };
+
+    const onChangePage = (number) => {
+        dispatch(setCurrentPage(number));
     };
     useEffect(() => {
         const category = categoryId > 0 ? `category=${categoryId}` : "";
@@ -55,7 +58,7 @@ export default function Home() {
                     : pizzas.map((pizza) => <PizzaBlock key={pizza.id} {...pizza} />)}
                 {}
             </div>
-            <Pagination onChangePage={(number) => setCurrentPage(number)} />
+            <Pagination onChangePage={onChangePage} />
         </div>
     );
 }
