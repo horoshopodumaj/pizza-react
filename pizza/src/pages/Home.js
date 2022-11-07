@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import qs from "qs";
 import axios from "axios";
 import Skeleton from "../components/PizzaBlock/Skeleton";
@@ -16,6 +16,9 @@ export default function Home() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
+    const isSearch = useRef(false);
+    const isMounted = useRef(false);
+
     const { searchValue } = useContext(SeacrhContext);
     const [pizzas, setPizzas] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
@@ -28,22 +31,7 @@ export default function Home() {
         dispatch(setCurrentPage(number));
     };
 
-    useEffect(() => {
-        if (window.location.search) {
-            const params = qs.parse(window.location.search.substring(1));
-            console.log(params);
-            const sort = list.find((obj) => obj.sortProperty === params.sortProperty);
-            console.log(sort);
-            dispatch(
-                setFilters({
-                    ...params,
-                    sort,
-                })
-            );
-        }
-    }, []);
-
-    useEffect(() => {
+    const fetchPizzas = () => {
         const category = categoryId > 0 ? `category=${categoryId}` : "";
         const sortType = sort.sortProperty.replace("-", "");
         const order = sort.sortProperty.includes("-") ? "asc" : "desc";
@@ -62,16 +50,45 @@ export default function Home() {
             console.error(error);
             alert("Что-то пошло не так");
         }
-        window.scrollTo(0, 0);
-    }, [categoryId, sort, searchValue, currentPage]);
+    };
+
+    //Если был первый рендер, то проверяем URL параметры и сохраняем их в Redux
+    useEffect(() => {
+        if (window.location.search) {
+            const params = qs.parse(window.location.search.substring(1));
+            const sort = list.find((obj) => obj.sortProperty === params.sortProperty);
+            dispatch(
+                setFilters({
+                    ...params,
+                    sort,
+                })
+            );
+            isSearch.current = true;
+        }
+    }, []);
+
+    //Если был первый рендер, то запрашиваем пиццы
 
     useEffect(() => {
-        const queryString = qs.stringify({
-            sortProperty: sort.sortProperty.replace("-", ""),
-            categoryId,
-            currentPage,
-        });
-        navigate(`?${queryString}`);
+        window.scrollTo(0, 0);
+        if (!isSearch.current) {
+            fetchPizzas();
+        }
+
+        isSearch.current = false;
+    }, [categoryId, sort.sortProperty, searchValue, currentPage]);
+
+    //Если изменились параметры после первого рендера
+    useEffect(() => {
+        if (isMounted.current) {
+            const queryString = qs.stringify({
+                sortProperty: sort.sortProperty.replace("-", ""),
+                categoryId,
+                currentPage,
+            });
+            navigate(`?${queryString}`);
+        }
+        isMounted.current = true;
     }, [categoryId, sort.sortProperty, currentPage]);
 
     return (
