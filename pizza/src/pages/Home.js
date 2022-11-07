@@ -102,7 +102,6 @@ export default function Home() {
                 {isLoading
                     ? [...new Array(6)].map((_, index) => <Skeleton key={index} />)
                     : pizzas.map((pizza) => <PizzaBlock key={pizza.id} {...pizza} />)}
-                {}
             </div>
             <Pagination onChangePage={onChangePage} />
         </div>

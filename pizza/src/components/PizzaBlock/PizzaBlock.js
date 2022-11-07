@@ -1,13 +1,27 @@
 import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { addItem } from "../../redux/slices/cartSlice";
 
-function PizzaBlock({ title, price, imageUrl, sizes, types }) {
-    const typeNames = ["тонкое", "традиционное"];
+const typeNames = ["тонкое", "традиционное"];
+
+function PizzaBlock({ id, title, price, imageUrl, sizes, types }) {
+    const dispatch = useDispatch();
 
     const [pizzaCount, setPizzaCount] = useState(0);
     const [activeType, setActiveType] = useState(0);
     const [sizePizza, setSizePizza] = useState(0);
 
     const onClickAdd = () => {
+        const item = {
+            id,
+            title,
+            price,
+            imageUrl,
+            type: typeNames[activeType],
+            size: sizePizza,
+        };
+        dispatch(addItem(item));
+
         setPizzaCount(pizzaCount + 1);
     };
 
