@@ -3,12 +3,12 @@ import qs from "qs";
 import axios from "axios";
 import Skeleton from "../components/PizzaBlock/Skeleton";
 import PizzaBlock from "../components/PizzaBlock";
-import Sort from "../components/Sort";
+import Sort, { list } from "../components/Sort";
 import Categories from "../components/Categories";
 import Pagination from "../components/Pagination";
 import { SeacrhContext } from "../App";
 import { useDispatch, useSelector } from "react-redux";
-import { setCategoryId, setCurrentPage } from "../redux/slices/filterSlice";
+import { setCategoryId, setCurrentPage, setFilters } from "../redux/slices/filterSlice";
 import { useNavigate } from "react-router-dom";
 
 export default function Home() {
@@ -27,6 +27,22 @@ export default function Home() {
     const onChangePage = (number) => {
         dispatch(setCurrentPage(number));
     };
+
+    useEffect(() => {
+        if (window.location.search) {
+            const params = qs.parse(window.location.search.substring(1));
+            console.log(params);
+            const sort = list.find((obj) => obj.sortProperty === params.sortProperty);
+            console.log(sort);
+            dispatch(
+                setFilters({
+                    ...params,
+                    sort,
+                })
+            );
+        }
+    }, []);
+
     useEffect(() => {
         const category = categoryId > 0 ? `category=${categoryId}` : "";
         const sortType = sort.sortProperty.replace("-", "");
@@ -51,12 +67,12 @@ export default function Home() {
 
     useEffect(() => {
         const queryString = qs.stringify({
-            sortProperty: sort.sortProperty,
+            sortProperty: sort.sortProperty.replace("-", ""),
             categoryId,
             currentPage,
         });
         navigate(`?${queryString}`);
-    }, [categoryId, sort, searchValue, currentPage]);
+    }, [categoryId, sort.sortProperty, currentPage]);
 
     return (
         <div className="container">
