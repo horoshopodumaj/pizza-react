@@ -23,12 +23,21 @@ export const cartSlice = createSlice({
         minusItem(state, action) {
             const findItem = state.items.find((item) => item.id === action.payload);
             findItem.count--;
+            state.totalPrice = state.items.reduce((sum, obj) => {
+                return obj.price * obj.count + sum;
+            }, 0);
         },
         removeItem(state, action) {
             state.items = state.items.filter((item) => item.id !== action.payload);
+            state.totalPrice = state.items.reduce((sum, obj) => {
+                return obj.price * obj.count + sum;
+            }, 0);
         },
         clearCart(state) {
             state.items = [];
+            state.totalPrice = state.items.reduce((sum, obj) => {
+                return obj.price * obj.count + sum;
+            }, 0);
         },
     },
 });
