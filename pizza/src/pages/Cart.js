@@ -6,10 +6,12 @@ import { clearCart } from "../redux/slices/cartSlice";
 
 export default function Cart() {
     const dispatch = useDispatch();
-    const items = useSelector((state) => state.cart.items);
+    const { items, totalPrice } = useSelector((state) => state.cart);
 
     const onClickClearCart = () => {
-        dispatch(clearCart());
+        if (window.confirm("Удалить все товары?")) {
+            dispatch(clearCart());
+        }
     };
 
     return (
@@ -104,7 +106,7 @@ export default function Cart() {
                             </b>
                         </span>
                         <span>
-                            Сумма заказа: <b>900 ₽</b>
+                            Сумма заказа: <b>{totalPrice} ₽</b>
                         </span>
                     </div>
                     <div className="cart__bottom-buttons">
