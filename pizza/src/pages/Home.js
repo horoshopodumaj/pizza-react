@@ -31,21 +31,18 @@ export default function Home() {
         dispatch(setCurrentPage(number));
     };
 
-    const fetchPizzas = () => {
+    const fetchPizzas = async () => {
         const category = categoryId > 0 ? `category=${categoryId}` : "";
         const sortType = sort.sortProperty.replace("-", "");
         const order = sort.sortProperty.includes("-") ? "asc" : "desc";
         const search = searchValue ? `&search=${searchValue}` : "";
         try {
             setIsLoading(true);
-            axios
-                .get(
-                    `https://635ab9256f97ae73a634f1e1.mockapi.io/pizzas?page=${currentPage}&limit=4&${category}&sortBy=${sortType}&order=${order}${search}`
-                )
-                .then((res) => {
-                    setPizzas(res.data);
-                    setIsLoading(false);
-                });
+            const res = await axios.get(
+                `https://635ab9256f97ae73a634f1e1.mockapi.io/pizzas?page=${currentPage}&limit=4&${category}&sortBy=${sortType}&order=${order}${search}`
+            );
+            setPizzas(res.data);
+            setIsLoading(false);
         } catch (error) {
             console.error(error);
             alert("Что-то пошло не так");
