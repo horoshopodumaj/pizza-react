@@ -10,9 +10,11 @@ import { SeacrhContext } from "../App";
 import { useDispatch, useSelector } from "react-redux";
 import { setCategoryId, setCurrentPage, setFilters } from "../redux/slices/filterSlice";
 import { useNavigate } from "react-router-dom";
+import { setItems } from "../redux/slices/pizzasSlice";
 
 export default function Home() {
     const { categoryId, sort, currentPage } = useSelector((state) => state.filter);
+    const pizzas = useSelector((state) => state.pizza.items);
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -20,7 +22,6 @@ export default function Home() {
     const isMounted = useRef(false);
 
     const { searchValue } = useContext(SeacrhContext);
-    const [pizzas, setPizzas] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
 
     const onClickCategory = (id) => {
@@ -39,10 +40,10 @@ export default function Home() {
         const search = searchValue ? `&search=${searchValue}` : "";
 
         try {
-            const res = await axios.get(
+            const { data } = await axios.get(
                 `https://635ab9256f97ae73a634f1e1.mockapi.io/pizzas?page=${currentPage}&limit=4&${category}&sortBy=${sortType}&order=${order}${search}`
             );
-            setPizzas(res.data);
+            dispatch(setItems(data));
         } catch (error) {
             console.error(error);
             alert("Что-то пошло не так");
