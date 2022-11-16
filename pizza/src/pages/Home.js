@@ -95,8 +95,11 @@ export default function Home() {
             </div>
             <h2 className="content__title">Все пиццы</h2>
             {status === "error" ? (
-                <div className="cart cart--empty">
-                    <h2>Произошла ошибка</h2> <icon>😕</icon>
+                <div className="content__error-info">
+                    <h2>
+                        Произошла ошибка <icon>😕</icon>
+                    </h2>
+
                     <p>Приносим свои извинения, мы скоро всё починим.</p>
                 </div>
             ) : (
