@@ -94,11 +94,19 @@ export default function Home() {
                 <Sort />
             </div>
             <h2 className="content__title">Все пиццы</h2>
-            <div className="content__items">
-                {status === "loading"
-                    ? [...new Array(6)].map((_, index) => <Skeleton key={index} />)
-                    : items.map((pizza) => <PizzaBlock key={pizza.id} {...pizza} />)}
-            </div>
+            {status === "error" ? (
+                <div className="cart cart--empty">
+                    <h2>Произошла ошибка</h2> <icon>😕</icon>
+                    <p>Приносим свои извинения, мы скоро всё починим.</p>
+                </div>
+            ) : (
+                <div className="content__items">
+                    {status === "loading"
+                        ? [...new Array(6)].map((_, index) => <Skeleton key={index} />)
+                        : items.map((pizza) => <PizzaBlock key={pizza.id} {...pizza} />)}
+                </div>
+            )}
+
             <Pagination onChangePage={onChangePage} />
         </div>
     );
