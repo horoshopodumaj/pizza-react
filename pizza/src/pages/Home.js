@@ -10,7 +10,7 @@ import { SeacrhContext } from "../App";
 import { useDispatch, useSelector } from "react-redux";
 import { setCategoryId, setCurrentPage, setFilters } from "../redux/slices/filterSlice";
 import { useNavigate } from "react-router-dom";
-import { setItems } from "../redux/slices/pizzasSlice";
+import { fetchPizzas } from "../redux/slices/pizzasSlice";
 
 export default function Home() {
     const { categoryId, sort, currentPage } = useSelector((state) => state.filter);
@@ -32,7 +32,7 @@ export default function Home() {
         dispatch(setCurrentPage(number));
     };
 
-    const fetchPizzas = async () => {
+    const getPizzas = async () => {
         setIsLoading(true);
         const category = categoryId > 0 ? `category=${categoryId}` : "";
         const sortType = sort.sortProperty.replace("-", "");
@@ -40,10 +40,15 @@ export default function Home() {
         const search = searchValue ? `&search=${searchValue}` : "";
 
         try {
-            const { data } = await axios.get(
-                `https://635ab9256f97ae73a634f1e1.mockapi.io/pizzas?page=${currentPage}&limit=4&${category}&sortBy=${sortType}&order=${order}${search}`
+            dispatch(
+                fetchPizzas({
+                    category,
+                    sortType,
+                    order,
+                    search,
+                    currentPage,
+                })
             );
-            dispatch(setItems(data));
         } catch (error) {
             console.error(error);
             alert("Что-то пошло не так");
@@ -72,7 +77,7 @@ export default function Home() {
     useEffect(() => {
         window.scrollTo(0, 0);
         if (!isSearch.current) {
-            fetchPizzas();
+            getPizzas();
         }
 
         isSearch.current = false;
