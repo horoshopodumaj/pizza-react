@@ -14,7 +14,7 @@ import { fetchPizzas } from "../redux/slices/pizzasSlice";
 
 export default function Home() {
     const { categoryId, sort, currentPage } = useSelector((state) => state.filter);
-    const pizzas = useSelector((state) => state.pizza.items);
+    const { items, status } = useSelector((state) => state.pizza);
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -22,7 +22,6 @@ export default function Home() {
     const isMounted = useRef(false);
 
     const { searchValue } = useContext(SeacrhContext);
-    const [isLoading, setIsLoading] = useState(true);
 
     const onClickCategory = (id) => {
         dispatch(setCategoryId(id));
@@ -33,28 +32,20 @@ export default function Home() {
     };
 
     const getPizzas = async () => {
-        setIsLoading(true);
         const category = categoryId > 0 ? `category=${categoryId}` : "";
         const sortType = sort.sortProperty.replace("-", "");
         const order = sort.sortProperty.includes("-") ? "asc" : "desc";
         const search = searchValue ? `&search=${searchValue}` : "";
 
-        try {
-            dispatch(
-                fetchPizzas({
-                    category,
-                    sortType,
-                    order,
-                    search,
-                    currentPage,
-                })
-            );
-        } catch (error) {
-            console.error(error);
-            alert("Что-то пошло не так");
-        } finally {
-            setIsLoading(false);
-        }
+        dispatch(
+            fetchPizzas({
+                category,
+                sortType,
+                order,
+                search,
+                currentPage,
+            })
+        );
     };
 
     //Если был первый рендер, то проверяем URL параметры и сохраняем их в Redux
@@ -104,9 +95,9 @@ export default function Home() {
             </div>
             <h2 className="content__title">Все пиццы</h2>
             <div className="content__items">
-                {isLoading
+                {status === "loading"
                     ? [...new Array(6)].map((_, index) => <Skeleton key={index} />)
-                    : pizzas.map((pizza) => <PizzaBlock key={pizza.id} {...pizza} />)}
+                    : items.map((pizza) => <PizzaBlock key={pizza.id} {...pizza} />)}
             </div>
             <Pagination onChangePage={onChangePage} />
         </div>
