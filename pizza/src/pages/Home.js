@@ -1,11 +1,10 @@
-import React, { useContext, useEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import qs from "qs";
 import Skeleton from "../components/PizzaBlock/Skeleton";
 import PizzaBlock from "../components/PizzaBlock";
 import Sort, { list } from "../components/Sort";
 import Categories from "../components/Categories";
 import Pagination from "../components/Pagination";
-import { SeacrhContext } from "../App";
 import { useDispatch, useSelector } from "react-redux";
 import {
     selectFilter,
@@ -17,15 +16,13 @@ import { useNavigate } from "react-router-dom";
 import { fetchPizzas, selectPizzaData } from "../redux/slices/pizzasSlice";
 
 export default function Home() {
-    const { categoryId, sort, currentPage } = useSelector(selectFilter);
+    const { categoryId, sort, currentPage, searchValue } = useSelector(selectFilter);
     const { items, status } = useSelector(selectPizzaData);
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
     const isSearch = useRef(false);
     const isMounted = useRef(false);
-
-    const { searchValue } = useContext(SeacrhContext);
 
     const onClickCategory = (id) => {
         dispatch(setCategoryId(id));
