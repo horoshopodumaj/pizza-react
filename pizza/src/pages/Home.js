@@ -7,13 +7,18 @@ import Categories from "../components/Categories";
 import Pagination from "../components/Pagination";
 import { SeacrhContext } from "../App";
 import { useDispatch, useSelector } from "react-redux";
-import { setCategoryId, setCurrentPage, setFilters } from "../redux/slices/filterSlice";
+import {
+    selectFilter,
+    setCategoryId,
+    setCurrentPage,
+    setFilters,
+} from "../redux/slices/filterSlice";
 import { useNavigate } from "react-router-dom";
-import { fetchPizzas } from "../redux/slices/pizzasSlice";
+import { fetchPizzas, selectPizzaData } from "../redux/slices/pizzasSlice";
 
 export default function Home() {
-    const { categoryId, sort, currentPage } = useSelector((state) => state.filter);
-    const { items, status } = useSelector((state) => state.pizza);
+    const { categoryId, sort, currentPage } = useSelector(selectFilter);
+    const { items, status } = useSelector(selectPizzaData);
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
