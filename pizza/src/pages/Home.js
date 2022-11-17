@@ -1,6 +1,5 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef } from "react";
 import qs from "qs";
-import axios from "axios";
 import Skeleton from "../components/PizzaBlock/Skeleton";
 import PizzaBlock from "../components/PizzaBlock";
 import Sort, { list } from "../components/Sort";
@@ -99,7 +98,6 @@ export default function Home() {
                     <h2>
                         Произошла ошибка <icon>😕</icon>
                     </h2>
-
                     <p>Приносим свои извинения, мы скоро всё починим.</p>
                 </div>
             ) : (
