@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
 import { selectCart } from "../redux/slices/cartSlice";
 import Search from "./Search";
+import pizzaLogo from "../assets/img/pizza-logo.svg";
 
 function Header() {
     const { items, totalPrice } = useSelector(selectCart);
@@ -13,7 +14,7 @@ function Header() {
             <div className="container">
                 <Link to="">
                     <div className="header__logo">
-                        <img width="38" src="img/pizza-logo.svg" alt="Pizza logo" />
+                        <img width="38" src={pizzaLogo} alt="Pizza logo" />
                         <div>
                             <h1>React Pizza</h1>
                             <p>самая вкусная пицца во вселенной</p>

@@ -12,7 +12,7 @@ import {
     setCurrentPage,
     setFilters,
 } from "../redux/slices/filterSlice";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { fetchPizzas, selectPizzaData } from "../redux/slices/pizzasSlice";
 
 export default function Home() {
@@ -106,7 +106,11 @@ export default function Home() {
                 <div className="content__items">
                     {status === "loading"
                         ? [...new Array(6)].map((_, index) => <Skeleton key={index} />)
-                        : items.map((pizza) => <PizzaBlock key={pizza.id} {...pizza} />)}
+                        : items.map((pizza) => (
+                              <Link to={`/pizza/${pizza.id}`} key={pizza.id}>
+                                  <PizzaBlock {...pizza} />
+                              </Link>
+                          ))}
                 </div>
             )}
 
