@@ -5,7 +5,16 @@ import { addItem, selectCartItemById } from "../../redux/slices/cartSlice";
 
 const typeNames = ["тонкое", "традиционное"];
 
-function PizzaBlock({ id, title, price, imageUrl, sizes, types }) {
+type PizzaBlockProps = {
+    id: string;
+    title: string;
+    price: number;
+    imageUrl: string;
+    sizes: number[];
+    types: number[];
+};
+
+function PizzaBlock({ id, title, price, imageUrl, sizes, types }: PizzaBlockProps): JSX.Element {
     const dispatch = useDispatch();
 
     const cartItem = useSelector(selectCartItemById(id));
@@ -24,11 +33,11 @@ function PizzaBlock({ id, title, price, imageUrl, sizes, types }) {
         dispatch(addItem(item));
     };
 
-    const onClickSize = (index) => {
+    const onClickSize = (index: number) => {
         setSizePizza(index);
     };
 
-    const onClickType = (index) => {
+    const onClickType = (index: number) => {
         setActiveType(index);
     };
     return (
