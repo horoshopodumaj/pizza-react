@@ -4,7 +4,7 @@ import { selectFilterSort, setSort } from "../redux/slices/filterSlice";
 
 type SortItem = {
     name: string;
-    sortProperty: string;
+    sortProperty: "rating" | "title" | "price" | "-rating" | "-title" | "-price";
 };
 
 type PopupClick = MouseEvent & {
