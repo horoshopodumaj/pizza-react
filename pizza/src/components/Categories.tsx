@@ -11,7 +11,7 @@ const categories = [
 
 type CategotiesProps = {
     value: number;
-    onClickCategory: any;
+    onClickCategory: (id: number) => void;
 };
 function Categories({ value, onClickCategory }: CategotiesProps): JSX.Element {
     return (

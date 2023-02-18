@@ -21,8 +21,8 @@ export default function Home(): JSX.Element {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const isSearch = useRef(false);
-    const isMounted = useRef(false);
+    const isSearch = useRef<boolean>(false);
+    const isMounted = useRef<boolean>(false);
 
     const onClickCategory = (id: number) => {
         dispatch(setCategoryId(id));
