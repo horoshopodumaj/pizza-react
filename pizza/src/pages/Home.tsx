@@ -12,10 +12,10 @@ import {
     setCurrentPage,
     setFilters,
 } from "../redux/slices/filterSlice";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { fetchPizzas, selectPizzaData } from "../redux/slices/pizzasSlice";
 
-export default function Home() {
+export default function Home(): JSX.Element {
     const { categoryId, sort, currentPage, searchValue } = useSelector(selectFilter);
     const { items, status } = useSelector(selectPizzaData);
     const dispatch = useDispatch();
@@ -24,12 +24,12 @@ export default function Home() {
     const isSearch = useRef(false);
     const isMounted = useRef(false);
 
-    const onClickCategory = (id) => {
+    const onClickCategory = (id: number) => {
         dispatch(setCategoryId(id));
     };
 
-    const onChangePage = (number) => {
-        dispatch(setCurrentPage(number));
+    const onChangePage = (page: number) => {
+        dispatch(setCurrentPage(page));
     };
 
     const getPizzas = async () => {
@@ -39,6 +39,7 @@ export default function Home() {
         const search = searchValue ? `&search=${searchValue}` : "";
 
         dispatch(
+            //@ts-ignore
             fetchPizzas({
                 category,
                 sortType,
@@ -98,7 +99,7 @@ export default function Home() {
             {status === "error" ? (
                 <div className="content__error-info">
                     <h2>
-                        Произошла ошибка <icon>😕</icon>
+                        Произошла ошибка <span>😕</span>
                     </h2>
                     <p>Приносим свои извинения, мы скоро всё починим.</p>
                 </div>
@@ -106,7 +107,7 @@ export default function Home() {
                 <div className="content__items">
                     {status === "loading"
                         ? [...new Array(6)].map((_, index) => <Skeleton key={index} />)
-                        : items.map((pizza) => <PizzaBlock key={pizza.id} {...pizza} />)}
+                        : items.map((pizza: any) => <PizzaBlock key={pizza.id} {...pizza} />)}
                 </div>
             )}
 
