@@ -8,7 +8,12 @@ const categories = [
     { id: 4, title: "Острые" },
     { id: 5, title: "Закрытые" },
 ];
-function Categories({ value, onClickCategory }) {
+
+type CategotiesProps = {
+    value: number;
+    onClickCategory: any;
+};
+function Categories({ value, onClickCategory }: CategotiesProps): JSX.Element {
     return (
         <div className="categories">
             <ul>
