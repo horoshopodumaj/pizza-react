@@ -2,8 +2,12 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
-export default function FullPizza() {
-    const [pizza, setPizza] = useState();
+export default function FullPizza(): JSX.Element {
+    const [pizza, setPizza] = useState<{
+        imageUrl: string;
+        title: string;
+        price: number;
+    }>();
     const { id } = useParams();
     const navigate = useNavigate();
 
@@ -24,8 +28,9 @@ export default function FullPizza() {
     }, []);
 
     if (!pizza) {
-        return "Loading";
+        return <>"Loading"</>;
     }
+
     return (
         <div className="container">
             <img src={pizza.imageUrl} />
