@@ -1,7 +1,6 @@
-import React from "react";
 import style from "./notfoundblock.module.scss";
 
-export default function NotFoundBlock() {
+export default function NotFoundBlock(): JSX.Element {
     return (
         <div className={style.root}>
             <h1>
