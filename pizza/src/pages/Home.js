@@ -106,11 +106,7 @@ export default function Home() {
                 <div className="content__items">
                     {status === "loading"
                         ? [...new Array(6)].map((_, index) => <Skeleton key={index} />)
-                        : items.map((pizza) => (
-                              <Link to={`/pizza/${pizza.id}`} key={pizza.id}>
-                                  <PizzaBlock {...pizza} />
-                              </Link>
-                          ))}
+                        : items.map((pizza) => <PizzaBlock key={pizza.id} {...pizza} />)}
                 </div>
             )}
 
