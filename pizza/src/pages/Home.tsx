@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useCallback, useEffect, useRef } from "react";
 import qs from "qs";
 import Skeleton from "../components/PizzaBlock/Skeleton";
 import PizzaBlock from "../components/PizzaBlock";
@@ -26,9 +26,9 @@ export default function Home(): JSX.Element {
     const isSearch = useRef<boolean>(false);
     const isMounted = useRef<boolean>(false);
 
-    const onClickCategory = (id: number) => {
+    const onClickCategory = useCallback((id: number) => {
         dispatch(setCategoryId(id));
-    };
+    }, []);
 
     const onChangePage = (page: number) => {
         dispatch(setCurrentPage(page));

@@ -1,4 +1,5 @@
-import React from "react";
+import { memo } from "react";
+import { useWhyDidYouUpdate } from "ahooks";
 
 const categories = [
     { id: 0, title: "Все" },
@@ -14,6 +15,7 @@ type CategotiesProps = {
     onClickCategory: (id: number) => void;
 };
 function Categories({ value, onClickCategory }: CategotiesProps): JSX.Element {
+    useWhyDidYouUpdate("Categories", { value, onClickCategory });
     return (
         <div className="categories">
             <ul>
@@ -30,4 +32,4 @@ function Categories({ value, onClickCategory }: CategotiesProps): JSX.Element {
     );
 }
 
-export default Categories;
+export default memo(Categories);
