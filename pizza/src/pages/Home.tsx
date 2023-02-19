@@ -7,7 +7,6 @@ import Categories from "../components/Categories";
 import Pagination from "../components/Pagination";
 import { useSelector } from "react-redux";
 import {
-    FilterSliceState,
     selectFilter,
     setCategoryId,
     setCurrentPage,
@@ -98,7 +97,7 @@ export default function Home(): JSX.Element {
         <div className="container">
             <div className="content__top">
                 <Categories value={categoryId} onClickCategory={onClickCategory} />
-                <Sort />
+                <Sort sort={sort} />
             </div>
             <h2 className="content__title">Все пиццы</h2>
             {status === "error" ? (
