@@ -8,9 +8,11 @@ import Pagination from "../components/Pagination";
 import { useSelector } from "react-redux";
 import { selectFilter } from "../redux/slices/filter/selectors";
 import { useNavigate } from "react-router-dom";
-import { FetchPizzaParams, fetchPizzas, selectPizzaData } from "../redux/slices/pizzasSlice";
 import { useAppDispatch } from "../redux/store";
 import { setCategoryId, setCurrentPage, setFilters } from "../redux/slices/filter/slice";
+import { selectPizzaData } from "../redux/slices/pizza/selectors";
+import { fetchPizzas } from "../redux/slices/pizza/slice";
+import { FetchPizzaParams } from "../redux/slices/pizza/types";
 
 export default function Home(): JSX.Element {
     const { categoryId, sort, currentPage, searchValue } = useSelector(selectFilter);
