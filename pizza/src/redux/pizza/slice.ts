@@ -1,6 +1,6 @@
 import axios from "axios";
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
-import { RootState } from "../../store";
+import { RootState } from "../store";
 import { FetchPizzaParams, Pizza, PizzaSliceState, Status } from "./types";
 
 export const fetchPizzas = createAsyncThunk<Pizza[], FetchPizzaParams>(
