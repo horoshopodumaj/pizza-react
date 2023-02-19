@@ -6,15 +6,11 @@ import Sort, { list } from "../components/Sort";
 import Categories from "../components/Categories";
 import Pagination from "../components/Pagination";
 import { useSelector } from "react-redux";
-import {
-    selectFilter,
-    setCategoryId,
-    setCurrentPage,
-    setFilters,
-} from "../redux/slices/filterSlice";
+import { selectFilter } from "../redux/slices/filter/selectors";
 import { useNavigate } from "react-router-dom";
 import { FetchPizzaParams, fetchPizzas, selectPizzaData } from "../redux/slices/pizzasSlice";
 import { useAppDispatch } from "../redux/store";
+import { setCategoryId, setCurrentPage, setFilters } from "../redux/slices/filter/slice";
 
 export default function Home(): JSX.Element {
     const { categoryId, sort, currentPage, searchValue } = useSelector(selectFilter);
