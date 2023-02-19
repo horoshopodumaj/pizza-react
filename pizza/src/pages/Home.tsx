@@ -5,20 +5,22 @@ import PizzaBlock from "../components/PizzaBlock";
 import Sort, { list } from "../components/Sort";
 import Categories from "../components/Categories";
 import Pagination from "../components/Pagination";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import {
+    FilterSliceState,
     selectFilter,
     setCategoryId,
     setCurrentPage,
     setFilters,
 } from "../redux/slices/filterSlice";
 import { useNavigate } from "react-router-dom";
-import { fetchPizzas, selectPizzaData } from "../redux/slices/pizzasSlice";
+import { FetchPizzaParams, fetchPizzas, selectPizzaData } from "../redux/slices/pizzasSlice";
+import { useAppDispatch } from "../redux/store";
 
 export default function Home(): JSX.Element {
     const { categoryId, sort, currentPage, searchValue } = useSelector(selectFilter);
     const { items, status } = useSelector(selectPizzaData);
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
     const isSearch = useRef<boolean>(false);
@@ -39,7 +41,6 @@ export default function Home(): JSX.Element {
         const search = searchValue ? `&search=${searchValue}` : "";
 
         dispatch(
-            //@ts-ignore
             fetchPizzas({
                 category,
                 sortType,
@@ -53,12 +54,16 @@ export default function Home(): JSX.Element {
     //Если был первый рендер, то проверяем URL параметры и сохраняем их в Redux
     useEffect(() => {
         if (window.location.search) {
-            const params = qs.parse(window.location.search.substring(1));
-            const sort = list.find((obj) => obj.sortProperty === params.sortProperty);
+            const params = qs.parse(
+                window.location.search.substring(1)
+            ) as unknown as FetchPizzaParams;
+            const sort = list.find((obj) => obj.sortProperty === params.sortType);
             dispatch(
                 setFilters({
-                    ...params,
-                    sort,
+                    categoryId: Number(params.category),
+                    currentPage: params.currentPage,
+                    searchValue: params.search,
+                    sort: sort || list[0],
                 })
             );
             isSearch.current = true;

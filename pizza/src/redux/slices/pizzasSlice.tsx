@@ -12,7 +12,7 @@ type Pizza = {
     rating: number;
 };
 
-enum Status {
+export enum Status {
     LOADING = "loading",
     SUCCESS = "success",
     ERROR = "error",
@@ -23,7 +23,15 @@ interface PizzaSliceState {
     items: Pizza[];
 }
 
-export const fetchPizzas = createAsyncThunk<Pizza[], Record<string, string>>(
+export type FetchPizzaParams = {
+    category: string;
+    sortType: string;
+    order: string;
+    search: string;
+    currentPage: number;
+};
+
+export const fetchPizzas = createAsyncThunk<Pizza[], FetchPizzaParams>(
     "pizza/fetchPizzasStatus",
     async (params) => {
         const { category, sortType, order, search, currentPage } = params;
