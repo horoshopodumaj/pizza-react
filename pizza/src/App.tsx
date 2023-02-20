@@ -9,7 +9,7 @@ import "./scss/app.scss";
 
 const Cart = Loadable({
     loader: () => import(/* webpackChunkName: "Cart" */ "./pages/Cart"),
-    loading: () => <div>Loading...</div>,
+    loading: () => <div style={{ textAlign: "center" }}>Loading...</div>,
 });
 const FullPizza = React.lazy(() => import(/* webpackChunkName: "FullPizza" */ "./pages/FullPizza"));
 const NotFound = React.lazy(() => import(/* webpackChunkName: "NotFound" */ "./pages/NotFound"));
@@ -22,7 +22,7 @@ function App() {
                 <Route
                     path="pizza/:id"
                     element={
-                        <Suspense fallback={<div>Loading...</div>}>
+                        <Suspense fallback={<div style={{ textAlign: "center" }}>Loading...</div>}>
                             <FullPizza />
                         </Suspense>
                     }
@@ -31,7 +31,7 @@ function App() {
                 <Route
                     path="*"
                     element={
-                        <Suspense fallback={<div>Loading...</div>}>
+                        <Suspense fallback={<div style={{ textAlign: "center" }}>Loading...</div>}>
                             <NotFound />
                         </Suspense>
                     }
