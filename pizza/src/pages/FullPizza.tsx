@@ -1,12 +1,16 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { PizzaBlock } from "../components";
 
 export default function FullPizza(): JSX.Element {
     const [pizza, setPizza] = useState<{
-        imageUrl: string;
+        id: string;
         title: string;
         price: number;
+        imageUrl: string;
+        sizes: number[];
+        types: number[];
     }>();
     const { id } = useParams();
     const navigate = useNavigate();
@@ -32,10 +36,11 @@ export default function FullPizza(): JSX.Element {
     }
 
     return (
-        <div className="container">
-            <img src={pizza.imageUrl} />
+        <div className="container container__full">
+            <PizzaBlock {...pizza} />
+            {/* <img src={pizza.imageUrl} />
             <h2>{pizza.title}</h2>
-            <h4>{pizza.price}p</h4>
+            <h4>{pizza.price}p</h4> */}
         </div>
     );
 }

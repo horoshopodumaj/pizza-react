@@ -133,6 +133,11 @@ body {
             margin: 0;
         }
     }
+
+    &__full {
+        display: flex;
+        justify-content: center;
+    }
 }
 
 .cart {
