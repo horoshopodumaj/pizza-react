@@ -1,6 +1,17 @@
 .root {
     position: relative;
-    left: -120px;
+    margin-left: 5px;
+    margin-right: 5px;
+    @media (max-width: 965px) {
+        width: 50%;
+    }
+    @media (max-width: 645px) {
+        width: 70%;
+        margin-bottom: 10px;
+    }
+    @media (max-width: 500px) {
+        width: 100%;
+    }
 }
 
 .input {
@@ -14,6 +25,15 @@
 
     &:hover {
         border: 1px solid rgba(0, 0, 0, 0.2);
+    }
+    @media (max-width: 1120px) {
+        width: 300px;
+    }
+    @media (max-width: 1000px) {
+        width: 250px;
+    }
+    @media (max-width: 965px) {
+        width: 100%;
     }
 }
 

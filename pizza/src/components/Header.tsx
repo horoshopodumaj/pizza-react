@@ -21,12 +21,12 @@ export function Header() {
     return (
         <div className="header">
             <div className="container">
-                <Link to="">
+                <Link to="" className="header__link">
                     <div className="header__logo">
                         <img width="38" src={pizzaLogo} alt="Pizza logo" />
                         <div>
-                            <h1>React Pizza</h1>
-                            <p>самая вкусная пицца во вселенной</p>
+                            <h1 className="header__title">React Pizza</h1>
+                            <p className="header__desc">самая вкусная пицца во вселенной</p>
                         </div>
                     </div>
                 </Link>

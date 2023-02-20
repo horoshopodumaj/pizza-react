@@ -3,21 +3,41 @@
 .header {
     border-bottom: 1px solid $gray-line;
     padding: 40px 0;
+    @media screen and (max-width: 645px) {
+        padding: 30px 0;
+    }
+    @media screen and (max-width: 500px) {
+        padding: 20px 0;
+    }
 
     .container {
         display: flex;
         align-items: center;
         justify-content: space-between;
+        @media (max-width: 965px) {
+            flex-wrap: wrap;
+        }
         @media screen and (max-width: 645px) {
             flex-direction: column;
         }
     }
 
+    &__link {
+        @media (max-width: 965px) {
+            width: 100%;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+    }
+
     &__logo {
         display: flex;
+        @media (max-width: 965px) {
+            justify-content: center;
+        }
 
         @media screen and (max-width: 645px) {
-            margin-bottom: 20px;
+            //margin-bottom: 20px;
         }
 
         img {
@@ -37,6 +57,9 @@
 
         p {
             color: #7b7b7b;
+            // @media (max-width: 1375px) {
+            //     word-wrap: break-word;
+            // }
             @media screen and (max-width: 645px) {
                 text-align: center;
             }
