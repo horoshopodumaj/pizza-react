@@ -3,13 +3,22 @@
     max-width: 750px;
     margin: 0 auto;
     text-align: center;
+    @media screen and (max-width: 810px) {
+        padding: 70px 20px;
+    }
 
     span {
         font-size: 64px;
+        @media screen and (max-width: 570px) {
+            font-size: 50px;
+        }
     }
 }
 
 .description {
     font-size: 22px;
     padding-top: 20px;
+    @media screen and (max-width: 570px) {
+        text-align: center;
+    }
 }

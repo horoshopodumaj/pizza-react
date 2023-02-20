@@ -28,7 +28,7 @@ export default function FullPizza(): JSX.Element {
     }, []);
 
     if (!pizza) {
-        return <>"Loading"</>;
+        return <div style={{ textAlign: "center" }}>Loading...</div>;
     }
 
     return (
